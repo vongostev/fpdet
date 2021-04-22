@@ -88,6 +88,7 @@ def fact(n: int) -> int:
 def p_convolve(p_signal, p_noise) -> np.ndarray:
     """
     Normalized convolution of two distributions
+
     >>> p_convolve([0.25, 0.25, 0.25, 0.25], [0.9, 0.1])
     array([0.23076923, 0.25641026, 0.25641026, 0.25641026])
 
