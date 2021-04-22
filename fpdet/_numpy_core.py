@@ -144,8 +144,10 @@ def mean(p) -> float:
 
 
 def g2(p) -> float:
-    """
-    Calculate quantum g2(0) value [1] of the given distribution
+    r"""
+    Calculate quantum (normally-ordered) g2(0) value for the given distribution
+
+    .. math:: g_2(0) = \frac{\langle n^2 \rangle - \langle n \rangle}{\langle n \rangle^2}
 
     Parameters
     ----------
@@ -157,15 +159,13 @@ def g2(p) -> float:
     float
         Quantum g2(0) value.
 
-    References
-    ----------
-    ..[1]
     """
     m = mean(p)
     s = moment(p, 2)
     if m == 0:
         m = 1
-        print('Uncorrect g2. Zero mean change to 1')
+        np.warnings.warn_explicit(
+            'Uncorrect g2. Zero mean change to 1', RuntimeWarning, 'fpdet._numpy_core.py', 168)
     return (s - m) / m ** 2
 
 
@@ -182,7 +182,7 @@ def normalize(p) -> np.ndarray:
 
 
 def fidelity(p, q) -> float:
-    """
+    r"""
     Fidelity between two distributions.
     Distributions must have the same length.
     Formula modification allows to calculate 'fidelity' between distributions' estimations with negative elements:

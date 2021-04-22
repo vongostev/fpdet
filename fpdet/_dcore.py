@@ -11,7 +11,6 @@ Created on Fri Oct 02 08:39:31 2019
 
 import numpy as np
 
-from ._numpy_core import normalize
 from ._dmatrix import d_binomial, d_subbinomial
 from ._dmatrix import invd_binomial, invd_subbinomial
 
@@ -33,7 +32,7 @@ def d_matrix(qe: float, N: int, M: int, mtype: str = 'binomial', n_cells: int = 
         Type of the detector: ideal is binomial, realistic is subbinomial,
         but in the most of applications one can consider the detector as binomial
         The default is 'binomial'.
-    n_cells : TYPE, optional
+    n_cells : int, optional
         Number of photocounting cells in the subbinomial case. The default is 0.
 
     Raises
@@ -76,14 +75,14 @@ def invd_matrix(qe: float, N: int, M: int, mtype: str = 'binomial', n_cells: int
         Type of the detector: ideal is binomial, realistic is subbinomial,
         but in most applications one can consider the detector as binomial
         The default is 'binomial'.
-    n_cells : TYPE, optional
+    n_cells : int, optional
         Number of photocounting cells is subbinomial case. The default is 0.
 
     Raises
     ------
     ValueError
         Wrong method for the matrix construction.
-        mtype must be binomial or subbinomial..
+        mtype must be binomial or subbinomial.
 
     Returns
     -------
@@ -118,7 +117,7 @@ def P2Q(P: np.ndarray, qe: float, M: int = 0, mtype: str = 'binomial', n_cells: 
         Type of the detector: ideal is binomial, realistic is subbinomial,
         but in most applications one can consider the detector as binomial
         The default is 'binomial'.
-    n_cells : TYPE, optional
+    n_cells : int, optional
         Number of photocounting cells is subbinomial case. The default is 0.
 
     Returns
@@ -131,7 +130,7 @@ def P2Q(P: np.ndarray, qe: float, M: int = 0, mtype: str = 'binomial', n_cells: 
     N = len(P)
     if M == 0:
         M = N
-    return normalize(d_matrix(qe, N, M, mtype, n_cells).dot(P))
+    return d_matrix(qe, N, M, mtype, n_cells).dot(P)
 
 
 def Q2P(Q: np.ndarray, qe: float, N: int = 0, mtype: str = 'binomial', n_cells: int = 0) -> np.ndarray:
@@ -152,7 +151,7 @@ def Q2P(Q: np.ndarray, qe: float, N: int = 0, mtype: str = 'binomial', n_cells: 
         Type of the detector: ideal is binomial, realistic is subbinomial,
         but in most applications one can consider the detector as binomial
         The default is 'binomial'.
-    n_cells : TYPE, optional
+    n_cells : int, optional
         Number of photocounting cells is subbinomial case. The default is 0.
 
     Returns
@@ -168,4 +167,4 @@ def Q2P(Q: np.ndarray, qe: float, N: int = 0, mtype: str = 'binomial', n_cells: 
         Q = np.concatenate((Q, np.zeros(N - M)))
         M = N
 
-    return normalize(invd_matrix(qe, M, N, mtype, n_cells).dot(Q))
+    return invd_matrix(qe, M, N, mtype, n_cells).dot(Q)
