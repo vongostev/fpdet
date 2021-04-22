@@ -1,2 +1,2 @@
 # fpdet
- Base analytical functions for a few-photon light detection
+ Basic analytical functions for a few-photon light detection
