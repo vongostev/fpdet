@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="fpdet",
-    version="1.0",
+    version="1.0.1",
     author="Pavel Gostev",
     author_email="gostev.pavel@physics.msu.ru",
     description=" Basic analytical functions for a few-photon light detection",
