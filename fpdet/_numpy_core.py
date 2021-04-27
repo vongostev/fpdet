@@ -11,6 +11,7 @@ numpy version
 
 import functools
 import numpy as np
+from numpy.lib import scimath as sm
 from scipy.special import factorial
 
 __all__ = ['compose', 'lrange', 'fact', 'p_convolve', 'moment', 'mean', 'g2',
@@ -46,7 +47,7 @@ def compose(*functions):
         lambda acc, f: lambda *y: f(*pack(acc(*pack(y)))), reversed(functions), lambda *x: x)
 
 
-def lrange(iterable):
+def lrange(iterable) -> np.ndarray:
     """
     Make np.arange with len identical to given iterable
 
@@ -62,7 +63,7 @@ def lrange(iterable):
 
     Returns
     -------
-    numpy.array
+    numpy.ndarray
         arange from 0 to len(iterable).
 
     """
@@ -182,13 +183,33 @@ def normalize(p) -> np.ndarray:
     return np.array(p) / moment(p, 0)
 
 
+def normdiff(p, q) -> float:
+    """
+    Alias to the 2-norm of a difference between two vectors
+
+    Parameters
+    ----------
+    p : iterable
+
+    q : iterable
+
+    Returns
+    -------
+    float
+        Norm discrepancy.
+
+    """
+    return np.linalg.norm(p - q)
+
+
 def fidelity(p, q) -> float:
     r"""
-    Fidelity between two distributions.
+    Fidelity or square of the Bhattacharyya distance between two distributions.
     Distributions must have the same length.
-    Formula modification allows to calculate 'fidelity' between distributions' estimations with negative elements:
+    Formula modification allows to calculate 'fidelity' 
+    between distributions' estimations with negative elements as
 
-    .. math:: F(p, q) = (\sum_ksign(p_kq_k)\sqrt{|p_kq_k|})^2
+    .. math:: F(p, q) = (|\sum_k \sqrt{|p_kq_k|}|)^2
 
     Parameters
     ----------
@@ -206,7 +227,7 @@ def fidelity(p, q) -> float:
         raise ValueError(
             f'Distributions must have the same length, not {len(p)}, {len(q)}')
     prod = np.array(p) * np.array(q)
-    return sum(np.sign(prod)*np.sqrt(np.abs(prod))) ** 2
+    return abs(np.sum(sm.sqrt(prod))) ** 2
 
 
 def entropy(p) -> float:
