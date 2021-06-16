@@ -1,3 +1,5 @@
+[![python 3.6-3.9](https://github.com/vongostev/fpdet/actions/workflows/python-package.yml/badge.svg)](https://github.com/vongostev/fpdet/actions/workflows/python-package.yml)
+[![pypi](https://github.com/vongostev/fpdet/actions/workflows/python-publish.yml/badge.svg)](https://github.com/vongostev/fpdet/actions/workflows/python-publish.yml)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/vongostev/fpdet.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/vongostev/fpdet/context:python)
 # fpdet
  Basic analytical functions for a few-photon light detection.
