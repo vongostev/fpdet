@@ -40,7 +40,7 @@ def d_binomial(qe: float, N: int, M: int) -> np.ndarray:
     """
     m = np.arange(M).reshape((-1, 1))
     n = np.arange(N).reshape((1, -1))
-    return comb(n, m, exact=False) * qe ** m * (1 - qe)**(n - m)
+    return np.nan_to_num(comb(n, m, exact=False) * qe ** m * (1 - qe)**(n - m))
 
 
 def invd_binomial(qe: float, N: int, M: int) -> np.ndarray:
